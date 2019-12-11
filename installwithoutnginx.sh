@@ -232,7 +232,19 @@ nginx_exist_chek(){
         echo -e "${OK} ${GreenBG} Nginx已存在，跳过编译安装过程 ${Font}"
         sleep 2
     else
-        nginx_install
+        read -p "是否需要安装 nginx (Y/N): " chrony_install
+        [[ -z ${chrony_install} ]] && chrony_install="Y"
+        case $chrony_install in
+            [yY][eE][sS]|[yY])
+                echo -e "${GreenBG} 继续安装nginx ${Font}"
+                nginx_install
+                sleep 2
+                ;;
+            *)
+                echo -e "${RedBG} 安装终止nginx ${Font}"
+                sleep 2
+                ;;
+        esac
     fi
 }
 nginx_install(){
